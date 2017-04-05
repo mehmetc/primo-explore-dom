@@ -1,4 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = "<style>.f18{min-height:18px;min-width:18px;height:18px;width:18px}</style><div id=\"explorerUiContainer\" ng-show=\"$ctrl.isActive()\" style=\"position:absolute;top:10px;height:90vh;background-color:#fff;z-index:1000000\">\n    <md-sidenav class=\"md-sidenav-left\" md-component-id=\"primo-explorer\" md-is-locked-open=\"$mdMedia('gt-md')\" md-whiteframe=\"4\" style=\"height:100%\">\n        <header id=\"explorerUiHeader\" ng-mousedown=\"$ctrl.headerMove($event)\">\n            <md-toolbar>\n                <div class=\"md-toolbar-tools\">\n                    <h2 flex md-truncate>PrimoExplorer v0.2</h2>\n                    <md-button class=\"md-icon-button\" ng-click=\"$ctrl.toggle()\" aria-label=\"Close\" title=\"Close\">\n                        <md-icon md-svg-icon=\"primo-ui:close\"></md-icon>\n                    </md-button>\n                </div>\n            </md-toolbar>\n        </header>\n\n        <section id=\"pe-components\">\n            <div flex id=\"pe-components-list\" ng-hide=\"$ctrl.selectedComponentDetailShow\">\n                <section style=\"background-color:#eee\">\n                    <div layout=\"row\">\n                        <md-button ng-click=\"$ctrl.refreshComponents()\">Reload</md-button>\n                        <md-input-container flex md-no-float>\n                            <label>Filter</label>\n                            <input ng-model=\"$ctrl.componentFilter\">\n                        </md-input-container>\n                    </div>\n                </section>\n                <md-content style=\"height:90%\">\n                    <md-list class=\"md-dense\">\n                        <md-list-item ng-repeat=\"component in $ctrl.components | filter:$ctrl.componentFilter\" ng-click=\"$ctrl.loadComponent(component)\">\n                            <span>{{component}}</span>\n                            <md-divider ng-if=\"!$last\"></md-divider>\n                        </md-list-item>\n                    </md-list>\n                </md-content>\n            </div>\n\n            <div flex id=\"pe-components-detail\" ng-show=\"$ctrl.selectedComponentDetailShow\">\n                <section style=\"height:100%\">\n                    <md-toolbar class=\"md-hue-2\" style=\"font-size:.8em;min-height:2.5em;height:2.5em\">\n                        <div class=\"md-toolbar-tools\" style=\"font-size:.8em;min-height:2.5em;height:2.5em\">\n\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.selectedComponentDetailShow = false\" aria-label=\"Back\" title=\"Back\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:chevron-left\"></md-icon>\n                            </md-button>\n\n                              <h2 flex md-truncate>{{$ctrl.selectedComponentName}}</h2>\n\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.blink()\" aria-label=\"Blink component\" title=\"Blink component\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:bell\"></md-icon>\n                            </md-button>\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.pushToConsole()\" aria-label=\"Push to console\" title=\"Push to console\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:open-in-new\"></md-icon>\n                            </md-button>\n                        </div>\n                    </md-toolbar>\n                    <section style=\"background-color:#eee\">\n                        <div layout=\"row\" layout-align=\"center center\">\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.selectedComponentElementPrev()\" aria-label=\"Previous element\" title=\"Previous element\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:chevron-left\"></md-icon>\n                            </md-button>\n                            <div layout-align=\"center center\">\n                                <div>{{$ctrl.selectedComponentElementIdx+1}}/{{$ctrl.selectedComponentElementCount}}</div>\n                            </div>\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.selectedComponentElementNext()\" aria-label=\"Next element\" title=\"Next element\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:chevron-right\"></md-icon>\n                            </md-button>\n                        </div>\n                        <div layout=\"row\" layout-align=\"center center\">\n                          <div flex md-truncate style=\"font-size:10px\">css({{$ctrl.selectedComponentElement.cssPath}})</div>\n                        </div>                        \n                    </section>\n                    <section>\n                        <md-list>\n                          <md-list-item ng-repeat=\"key in $ctrl.selectedComponentElementCtrlKeys()\">\n                              {{key}}\n                          </md-list-item>\n                        </md-list>\n                    </section>\n                </section>\n            </div>\n        </section>\n    </md-sidenav>\n</div>";
+
+},{}],2:[function(require,module,exports){
 'use strict';
 
 var _primo = require('./primo');
@@ -8,9 +11,8 @@ var _primo2 = _interopRequireDefault(_primo);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 window.Primo = _primo2.default;
-//Primo.ui.toggle();
 
-},{"./primo":2}],2:[function(require,module,exports){
+},{"./primo":3}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -71,7 +73,7 @@ var Primo = function () {
 
 exports.default = Primo;
 
-},{"./primo/explore":3,"./primo/helper":8,"./primo/ui":9}],3:[function(require,module,exports){
+},{"./primo/explore":4,"./primo/helper":9,"./primo/ui":10}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -142,7 +144,7 @@ var Explore = function () {
 
 exports.default = Explore;
 
-},{"./explore/components":4,"./explore/facets":5,"./explore/records":6,"./explore/session":7,"./helper":8}],4:[function(require,module,exports){
+},{"./explore/components":5,"./explore/facets":6,"./explore/records":7,"./explore/session":8,"./helper":9}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -251,7 +253,7 @@ var Components = function () {
 
 exports.default = Components;
 
-},{"../../vendor/css-selector-generator.js":10,"../helper":8}],5:[function(require,module,exports){
+},{"../../vendor/css-selector-generator.js":11,"../helper":9}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -308,7 +310,7 @@ var Facets = function () {
 
 exports.default = Facets;
 
-},{"../helper":8,"./components":4}],6:[function(require,module,exports){
+},{"../helper":9,"./components":5}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -368,7 +370,7 @@ var Records = function () {
 
 exports.default = Records;
 
-},{"../helper":8,"./components":4}],7:[function(require,module,exports){
+},{"../helper":9,"./components":5}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -439,7 +441,7 @@ var Session = function () {
 
 exports.default = Session;
 
-},{"../helper":8}],8:[function(require,module,exports){
+},{"../helper":9}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -614,7 +616,7 @@ var Helper = function () {
 
 exports.default = Helper;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -642,6 +644,7 @@ var Ui = function () {
     value: function _createModule() {
       var vmUi = this;
       return angular.module("explorerUi", ['ngMaterial']).component("explorerUi", {
+        templateUrl: 'primoExploreDOM',
         controller: ['$http', '$scope', function ($http, $scope) {
           var ctrl = this;
           ctrl.selectedTab = 0;
@@ -761,10 +764,11 @@ var Ui = function () {
             header.addEventListener('mouseup', dropHeader, true);
             header.addEventListener('mousemove', dragHeader, true);
           };
-        }],
-        templateUrl: 'custom/KULeuven/html/nuDashboard.html'
+        }]
       }).config(function ($mdIconProvider) {
         $mdIconProvider.iconSet('primo-ui', 'img/svg/svg-primo-ui.svg', 18);
+      }).run(function ($templateCache) {
+        $templateCache.put('primoExploreDOM', require('../../html/nuDashboard.html'));
       });
     }
   }, {
@@ -781,19 +785,19 @@ var Ui = function () {
     key: 'show',
     value: function show() {
       this.active = true;
-      this.scope.$apply();
+      //this.scope.$apply();
     }
   }, {
     key: 'hide',
     value: function hide() {
       this.active = false;
-      this.scope.$apply();
+      //this.scope.$apply();
     }
   }, {
     key: 'toggle',
     value: function toggle() {
       this.active = !this.active;
-      this.scope.$apply();
+      //this.scope.$apply();
     }
   }]);
 
@@ -802,7 +806,7 @@ var Ui = function () {
 
 exports.default = Ui;
 
-},{}],10:[function(require,module,exports){
+},{"../../html/nuDashboard.html":1}],11:[function(require,module,exports){
 'use strict';
 
 (function () {
@@ -1118,4 +1122,4 @@ exports.default = Ui;
   }
 }).call(undefined);
 
-},{}]},{},[1]);
+},{}]},{},[2]);

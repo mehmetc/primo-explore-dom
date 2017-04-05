@@ -18,7 +18,7 @@ export default class Primo {
   static get ui(){
     if (this._ui === undefined) {
       console.log('Creation UI');
-       this._ui = new Ui();
+      this._ui = new Ui();
     }
     return this._ui;
   }

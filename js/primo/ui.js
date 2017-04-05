@@ -12,6 +12,7 @@ export default class Ui{
     let vmUi = this;
     return angular.module("explorerUi", ['ngMaterial'])
            .component("explorerUi",{
+             templateUrl: 'primoExploreDOM',
              controller:['$http', '$scope', function($http, $scope){
                let ctrl = this;
                ctrl.selectedTab = 0;
@@ -69,7 +70,7 @@ export default class Ui{
                    let keys = ctrl.selectedComponentElement.ctrl();
                    if (keys) {
                       return Object.keys(keys);
-                   }                   
+                   }
                  }
                  return [];
                }
@@ -133,10 +134,11 @@ export default class Ui{
                  header.addEventListener('mouseup', dropHeader, true);
                  header.addEventListener('mousemove', dragHeader, true);
                }
-             }],
-             templateUrl: 'custom/KULeuven/html/nuDashboard.html'
+             }]
            }).config(function($mdIconProvider){
              $mdIconProvider.iconSet('primo-ui', 'img/svg/svg-primo-ui.svg', 18);
+           }).run(function($templateCache){
+             $templateCache.put('primoExploreDOM', require('../../html/nuDashboard.html'));
            });
   }
 
@@ -151,16 +153,16 @@ export default class Ui{
 
   show(){
     this.active = true;
-    this.scope.$apply();
+    //this.scope.$apply();
   }
 
   hide(){
     this.active = false;
-    this.scope.$apply();
+    //this.scope.$apply();
   }
 
   toggle(){
     this.active = !this.active;
-    this.scope.$apply();
+    //this.scope.$apply();
   }
 }
