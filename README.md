@@ -44,14 +44,48 @@ For now it is not possible to access the $scope and $ctrl without the debug info
   Primo.explore.session.id
 ```
 ## user
-TODO
+### Get user ID
+```js
+  Primo.explore.session.user.id
+```
+### Get user name
+```js
+  Primo.explore.session.user.name
+```
+### Get user email
+```js
+  Primo.explore.session.user.email
+```
+### Is user logged in
+```js
+  Primo.explore.session.user.isLoggedIn()
+```
+### is user on campus
+```js
+  Primo.explore.session.user.isOnCampus()
+```
 ## view
-TODO
+### Get VID
+```js
+  Primo.explore.session.view.code
+```
+### Get institution code
+```js
+  Primo.explore.session.view.institution.code
+```
+### Get institution name
+```js
+  Primo.explore.session.view.institution.name
+```
+### Get interface language
+```js
+  Primo.explore.session.view.interfaceLanguage
+```
 ## ip
-TODO
-## institution
-TODO
-
+### Get IP address of your Primo session
+```js
+  Primo.explore.session.ip.address
+```
 # Components
 ## Getting available components
 The components list changes over time. Some components are only available in certain situations
