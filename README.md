@@ -5,13 +5,15 @@ This package will extend the newUI through a "Template Package" or "Central Pack
   2. Download a "Template Package" or "Central Package" from the Primo Back Office
   3. Extract the downloaded package to ```primo-explore-devenv/primo-explore/custom```
   4. Rename the "Template Package" directory to reflect your view code
-  5. Create a ```package.json``` file if you do not have one by running ```npm init -y```
-  6. Install and store a reference to this package ```npm install primo-explore-dom --save-dev```
+  5. Create a ```package.json``` file if you do not have one by running 
+    * ```npm init -y```
+  6. Install and store a reference to this package 
+    * ```npm install primo-explore-dom --save-dev```
   7. Test.
     * ```gulp run --view YOUR_VIEW_CODE```
     * Open your web browser and go to http://localhost:8003/primo-explore/search?vid=YOUR_VIEW_CODE
 
-PS: __ YOUR_VIEW_CODE __ must be replaced with the code you use for your view.    
+PS: __YOUR_VIEW_CODE__ must be replaced with the code you use for your view.    
 
 # General
 If you are using this library to understand the newUI always load debug info first.
