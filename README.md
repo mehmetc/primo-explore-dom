@@ -11,7 +11,10 @@ This package will extend the newUI through a "Template Package" or "Central Pack
     * ```gulp run --view YOUR_VIEW_CODE```
     * Open your web browser and go to http://localhost:8003/primo-explore/search?vid=YOUR_VIEW_CODE
 
-PS: __ YOUR_VIEW_CODE __ must be replaced with the code you use for your view.    
+PS: __YOUR_VIEW_CODE__ must be replaced with the code you use for your view.    
+
+![install PRIMO Domain Object Model](./img/install_primo-explore-dom.gif "install PRIMO Domain Object Model")
+
 
 # General
 If you are using this library to understand the newUI always load debug info first.
