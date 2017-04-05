@@ -1,5 +1,8 @@
 TODO:write documentation
 
+### This is a __pre-release__: you can help me make it better.
+
+
 Watch my [EPUG-UKI AGM 2017](https://youtu.be/0IV4e94qroo?t=27m6s) presentation to get an idea of what it is and what it can do.
 
 # Install
@@ -8,9 +11,9 @@ This package will extend the newUI through a "Template Package" or "Central Pack
   2. Download a "Template Package" or "Central Package" from the Primo Back Office
   3. Extract the downloaded package to ```primo-explore-devenv/primo-explore/custom```
   4. Rename the "Template Package" directory to reflect your view code
-  5. Create a ```package.json``` file if you do not have one by running 
+  5. Create a ```package.json``` file if you do not have one by running
     * ```npm init -y```
-  6. Install and store a reference to this package 
+  6. Install and store a reference to this package
     * ```npm install primo-explore-dom --save-dev```
   7. Test.
     * ```gulp run --view YOUR_VIEW_CODE```
@@ -21,7 +24,15 @@ PS: __YOUR_VIEW_CODE__ must be replaced with the code you use for your view.
 ![install PRIMO Domain Object Model](./img/install_primo-explore-dom.gif "install PRIMO Domain Object Model")
 
 
-# General
+# Quick links
+- [General](#general)
+- [Session](#session)
+- [Components](#components)
+- [Records](#records)
+- [Facets](#facets)
+- [UI](#ui)
+
+# General<a name="general"></a>
 If you are using this library to understand the newUI always load debug info first.
 ```js
   angular.reloadWithDebugInfo();
@@ -38,12 +49,12 @@ For now it is not possible to access the $scope and $ctrl without the debug info
 ```js
   Primo.isPrimoAvailable()
 ```  
-# Session
+# Session<a name="session"></a>
 ## Getting the session id (only available when logged in)
 ```js
   Primo.explore.session.id
 ```
-## user
+## user<a name="user"></a>
 ### Get user ID
 ```js
   Primo.explore.session.user.id
@@ -64,7 +75,7 @@ For now it is not possible to access the $scope and $ctrl without the debug info
 ```js
   Primo.explore.session.user.isOnCampus()
 ```
-## view
+## view<a name="view"></a>
 ### Get VID
 ```js
   Primo.explore.session.view.code
@@ -86,7 +97,7 @@ For now it is not possible to access the $scope and $ctrl without the debug info
 ```js
   Primo.explore.session.ip.address
 ```
-# Components
+# Components<a name="Components"></a>
 ## Getting available components
 The components list changes over time. Some components are only available in certain situations
 ```js
@@ -127,7 +138,7 @@ The components list changes over time. Some components are only available in cer
   primIcons[0].blink()
 ```
 
-# Records
+# Records<a name="records"></a>
 ## Getting access to all records
 ```js
   Primo.explore.records
@@ -138,7 +149,7 @@ The components list changes over time. Some components are only available in cer
 ```
 
 
-# Facets
+# Facets<a name="facets"></a>
 ## Getting access to all facets
 ```js
   Primo.explore.facets
@@ -156,9 +167,10 @@ The components list changes over time. Some components are only available in cer
 ```js
   Primo.explore.facets[0].values
 ```
-# UI
+# UI<a name="ui"></a>
 TODO: Should this go into its own repo?
-### Active the UI
+### Activate the UI
 ```js
   Primo.ui.toggle()
 ```  
+![PRIMO Domain Object Model UI](./img/primo-explore-dom_ui.gif "PRIMO Domain Object Model UI")
