@@ -1,9 +1,16 @@
-TODO:write documentation
 
-### This is a __pre-release__: you can help me make it better.
-
+### This is a __pre-release__: you can help us make it better.
 
 Watch my [EPUG-UKI AGM 2017](https://youtu.be/0IV4e94qroo?t=27m6s) presentation to get an idea of what it is and what it can do.
+
+# Why do we need a Domain Object Model?
+A domain object model according to [Tim Howard](https://www.amazon.com/Smalltalk-Developers-Guide-VisualWorks-diskette/dp/013442526X) is a logical container of domain information. You might assume that a model is present in every component and that is kind of true. When you examine a component you get a long list of context(component) specific information and there is no obvious way to access the most common(session, user, record, facet) information from within this component. And if you use an newUI service Ex Libris does not garentee that this service will still be present in the next newUI release.
+
+I'm not saying that we need an [SDK](https://en.wikipedia.org/wiki/Software_development_kit) but we definitely need something that will withstand the test of time and maybe even is AngularJS agnostic. Currently the newUI is written using AngularJS 1 but plans are in place to upgrade to a future AngularJS and when this happens everybody who has written custom newUI code has to rewrite it for that AngularJS version. 
+
+TODO:write more documentation
+
+
 
 # Install
 This package will extend the newUI through a "Template Package" or "Central Package".
