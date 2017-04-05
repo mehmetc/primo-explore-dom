@@ -1,5 +1,19 @@
 TODO:write documentation
+# Install
+This package will extend the newUI through a "Template Package" or "Central Package".
+  1. Install and configure [primo-explore-devenv](https://github.com/ExLibrisGroup/primo-explore-devenv)
+  2. Download a "Template Package" or "Central Package" from the Primo Back Office
+  3. Extract the downloaded package to ```primo-explore-devenv/primo-explore/custom```
+  4. Rename the "Template Package" directory to reflect your view code
+  5. Create a ```package.json``` file if you do not have one by running ```npm init -y```
+  6. Install and store a reference to this package ```npm install primo-explore-dom --save-dev```
+  7. Test.
+    * ```gulp run --view YOUR_VIEW_CODE```
+    * Open your web browser and go to http://localhost:8003/primo-explore/search?vid=YOUR_VIEW_CODE
 
+PS: __ YOUR_VIEW_CODE __ must be replaced with the code you use for your view.    
+
+# General
 If you are using this library to understand the newUI always load debug info first.
 ```js
   angular.reloadWithDebugInfo();
@@ -7,7 +21,7 @@ If you are using this library to understand the newUI always load debug info fir
 For now it is not possible to access the $scope and $ctrl without the debug info. The library will throw an error if this is the case and try an alternative method but this does not work for component access.
 (__±__ will mark methods that absolutely need $scope access)
 
-# General
+
 ## Check if the library is loaded with debug info enabled
 ```js
   Primo.isDebugEnabled()
@@ -17,7 +31,7 @@ For now it is not possible to access the $scope and $ctrl without the debug info
   Primo.isPrimoAvailable()
 ```  
 # Session
-## Getting the session id (only available when logged in) 
+## Getting the session id (only available when logged in)
 ```js
   Primo.explore.session.id
 ```
@@ -32,7 +46,7 @@ TODO
 
 # Components
 ## Getting available components
-The components list changes over time. Some components are only available in certain situations 
+The components list changes over time. Some components are only available in certain situations
 ```js
   Primo.explore.components.keys();
 ```
@@ -99,7 +113,7 @@ The components list changes over time. Some components are only available in cer
 ### Getting facet values
 ```js
   Primo.explore.facets[0].values
-``` 
+```
 # UI
 TODO: Should this go into its own repo?
 ### Active the UI
