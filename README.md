@@ -1,4 +1,7 @@
 TODO:write documentation
+
+Watch my [EPUG-UKI AGM 2017](https://youtu.be/0IV4e94qroo?t=27m6s) presentation to get an idea of what it is and what it can do.
+
 # Install
 This package will extend the newUI through a "Template Package" or "Central Package".
   1. Install and configure [primo-explore-devenv](https://github.com/ExLibrisGroup/primo-explore-devenv)
