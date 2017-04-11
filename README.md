@@ -17,8 +17,9 @@ This package will extend the newUI through a "Template Package" or "Central Pack
   1. Install and configure [primo-explore-devenv](https://github.com/ExLibrisGroup/primo-explore-devenv)
   2. Download a "Template Package" or "Central Package" from the Primo Back Office
   3. Extract the downloaded package to ```primo-explore-devenv/primo-explore/custom```
-  4. Rename the "Template Package" directory to reflect your view code
-  5. Create a ```package.json``` file if you do not have one by running
+  4. Rename the "Template Package" directory to reflect your view code for example to ```YOUR_VIEW_CODE```
+  5. Create a ```package.json``` file __inside__ your package directory
+    * ```cd YOUR_VIEW_CODE```
     * ```npm init -y```
   6. Install and store a reference to this package
     * ```npm install primo-explore-dom --save-dev```
