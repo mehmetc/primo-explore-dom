@@ -32,6 +32,30 @@ PS: __YOUR_VIEW_CODE__ must be replaced with the code you use for your view.
 ![install PRIMO Domain Object Model](./img/install_primo-explore-dom.gif "install PRIMO Domain Object Model")
 
 
+
+## If you haven't installed [primo-explore-devenv](https://github.com/ExLibrisGroup/primo-explore-devenv) but do want to explore you can load [primo-explore-dom](https://github.com/mehmetc/primo-explore-dom) from your web browser console.
+```javascript
+//enable debug information. Wait for the screen to reload.
+angular.reloadWithDebugInfo();
+
+
+//When screen is reloaded
+//Get a pointer to AngularJs and angularLoad
+var appInjector = angular.injector(['ng','angularLoad'])
+//Get a reference to angularLoad 
+var angularLoad = appInjector.get('angularLoad');
+//Load the script;
+angularLoad.loadScript('https://npmcdn.com/primo-explore-dom/js/primo-explore-dom.js').then(function(){
+    console.log('script loaded');    
+});
+
+//activate explorer ui
+Primo.ui.toggle();
+
+//Print the VID
+Primo.explore.session.view.code
+```
+
 # Quick links
 - [General](#general)
 - [Session](#session)
