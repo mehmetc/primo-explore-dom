@@ -127,7 +127,7 @@ For now it is not possible to access the $scope and $ctrl without the debug info
 ```
 ### Get institution code
 ```js
-  Primo.explore.session.view.institution.code
+  Primo.view.then(view => console.log(view.institution.code));
 ```
 ### Get institution name
 ```js
