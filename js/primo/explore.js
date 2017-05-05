@@ -4,7 +4,7 @@ import Ui from './explore/ui'
 
 //this is proxy class
 export default class Explore {
-  static get components(){
+  static get components() {
     let c = new Components();
     Helper.componentNames.forEach((selector) => {
       c.add(selector);
@@ -20,5 +20,9 @@ export default class Explore {
       this._ui = new Ui();
     }
     return this._ui;
+  }
+
+  static get helper() {
+    return Helper;
   }
 }

@@ -7157,15 +7157,6 @@ var Primo = function () {
         });
       });
     }
-
-    //Do not use will be removed. Here just for testing.
-    //TODO: remove
-
-  }, {
-    key: 'helper',
-    get: function get() {
-      return _helper2.default;
-    }
   }]);
 
   return Primo;
@@ -7225,6 +7216,11 @@ var Explore = function () {
         this._ui = new _ui2.default();
       }
       return this._ui;
+    }
+  }, {
+    key: 'helper',
+    get: function get() {
+      return _helper2.default;
     }
   }]);
 

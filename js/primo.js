@@ -85,11 +85,4 @@ export default class Primo {
       });
     });
   }
-
-  //Do not use will be removed. Here just for testing.
-  //TODO: remove
-  static get helper(){
-    return Helper;
-  }
-
 }
