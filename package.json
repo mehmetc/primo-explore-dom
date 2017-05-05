@@ -6,11 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "esdoc": {
+    "source": "./js",
+    "destination": "./doc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mehmetc/primo-explore-dom.git"
   },
-  "keywords": ["primo", "newUI", "NUI", "Ex Libris", "primo-explore"],
+  "keywords": [
+    "primo",
+    "newUI",
+    "NUI",
+    "Ex Libris",
+    "primo-explore"
+  ],
   "author": "Mehmet Celik",
   "license": "MIT",
   "bugs": {

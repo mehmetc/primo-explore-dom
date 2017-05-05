@@ -1,6 +1,6 @@
 var cssSelectorGenerator = new(require('../../vendor/css-selector-generator.js')).CssSelectorGenerator;
 
-import Helper from '../helper'
+import Helper from './helper'
 
 class Component {
   constructor(element){

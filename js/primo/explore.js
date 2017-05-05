@@ -1,8 +1,6 @@
 import Components from './explore/components'
-import Records from './explore/records'
-import Facets from './explore/facets'
-import Session from './explore/session'
-import Helper from './helper'
+import Helper from './explore/helper'
+import Ui from './explore/ui'
 
 //this is proxy class
 export default class Explore {
@@ -15,15 +13,12 @@ export default class Explore {
     return c;
   }
 
-  static get records(){
-    return new Records(this.components);
-  }
-
-  static get facets(){
-    return new Facets(this.components);
-  }
-
-  static get session(){
-    return new Session();
+  //TODO: extract
+  static get ui() {
+    if (this._ui === undefined) {
+      console.log('Creation UI');
+      this._ui = new Ui();
+    }
+    return this._ui;
   }
 }

@@ -45,6 +45,18 @@ export default class Helper {
       return null;
     }
 
+    static get http() {
+      let injector = this.injector();
+      if (injector) {
+        let h = injector.get('$http');
+        if (h) {
+          return h;
+        }
+      }
+
+      return null;
+    }
+
     static rootScope() {
       let injector = this.injector();
       if (injector) {
@@ -57,13 +69,25 @@ export default class Helper {
       return null;
     }
 
-    static get userSessionManagerService() {
+    static userSessionManagerService() {
       let rootScope = this.rootScope();
       if (rootScope) {
         return rootScope.$$childHead.$ctrl.userSessionManagerService;
       }
 
       return null;
+    }
+
+    static jwtData() {
+      let uSMS = this.userSessionManagerService();
+      if (uSMS) {
+        let jwtData = uSMS.jwtUtilService.getDecodedToken() || {};
+        return jwtData;
+      }
+    }
+
+    static userDetails() {
+      return this.userSessionManagerService().$localForage.getItem('userDetails');
     }
 
     static blink(component, numberOfBlinks = 4) {

@@ -1,5 +1,5 @@
-import Components from './components'
-import Helper from '../helper'
+import Components from './explore/components'
+import Helper from './explore/helper'
 
 export default class Facets {
     constructor(components) {
@@ -17,7 +17,7 @@ export default class Facets {
         } catch (e) {
           console.log('trying to get facets through the rootScope');
           try {
-              return Helper.userSessionManagerService.searchStateService.resultObject.facets;
+              return Helper.userSessionManagerService().searchStateService.resultObject.facets;
           } catch(e) {
               console.error('unable to retrieve facets');
           }

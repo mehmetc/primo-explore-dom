@@ -138,7 +138,7 @@ export default class Ui{
            }).config(function($mdIconProvider){
              $mdIconProvider.iconSet('primo-ui', 'img/svg/svg-primo-ui.svg', 18);
            }).run(function($templateCache){
-             $templateCache.put('primoExploreDOM', require('../../html/nuDashboard.html'));
+             $templateCache.put('primoExploreDOM', require('../../../html/nuDashboard.html'));
            });
   }
 
