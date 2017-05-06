@@ -12,7 +12,7 @@
         <header id='explorerUiHeader' ng-mousedown='$ctrl.headerMove($event)'>
             <md-toolbar>
                 <div class="md-toolbar-tools">
-                    <h2 flex md-truncate>PrimoExplorer v0.2</h2>
+                    <h2 flex md-truncate>PrimoExplorer {{$ctrl.version}}</h2>
                     <md-button class='md-icon-button' ng-click="$ctrl.toggle()" aria-label="Close" title='Close'>
                         <md-icon md-svg-icon="primo-ui:close"></md-icon>
                     </md-button>
@@ -74,7 +74,7 @@
                         </div>
                         <div layout="row" layout-align="center center">
                           <div flex md-truncate style="font-size:10px;">css({{$ctrl.selectedComponentElement.cssPath}})</div>
-                        </div>                        
+                        </div>
                     </section>
                     <section>
                         <md-list>

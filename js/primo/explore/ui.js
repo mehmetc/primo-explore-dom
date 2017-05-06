@@ -15,6 +15,7 @@ export default class Ui{
              templateUrl: 'primoExploreDOM',
              controller:['$http', '$scope', function($http, $scope){
                let ctrl = this;
+               ctrl.version = Primo.version || '';
                ctrl.selectedTab = 0;
                ctrl.selectedComponent = null;
                ctrl.componentFilter = '';
