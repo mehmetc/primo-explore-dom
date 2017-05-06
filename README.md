@@ -68,9 +68,10 @@ Primo.view.then(v => console.log(v.code));
 # Quick links
 - [General](#general)
 - [User](#user)
-- [Components](#components)
 - [Records](#records)
 - [Facets](#facets)
+- [Helper](#helper)
+- [Components](#components)
 - [UI](#ui)
 
 # General<a name="general"></a>
@@ -219,14 +220,56 @@ The components list changes over time. Some components are only available in cer
   primIcons[0].blink()
 ```
 
-# Helper
-__TODO:__ write documentation
-
+# Helper<a name="helper"></a>
+### Same as Primo.isDebugEnabled()
+```js
+  Primo.explore.helper.isDebugEnabled();
+```
+### Same as Primo.isPrimoAvailable()
+```js
+  Primo.explore.helper.isPrimoAvailable();
+```  
+### Get all rendered components
+```js
+  Primo.explore.helper.componentNames
+```  
+### Same as document.querySelectorAll but return an Array instead of a NodeList
+```js
+  Primo.explore.helper.querySelectorAll(selector)
+```  
+### PrimoExplore injector
+```js
+  Primo.explore.helper.injector()
+```  
+### Reference to AngularJS $http
+```js
+  Primo.explore.helper.http
+```  
+### Reference to PrimoExplore rootScope
+```js
+  Primo.explore.helper.rootScope()
+```  
+### Reference to userSessionManagerService
+```js
+  Primo.explore.helper.userSessionManagerService()
+```  
+### Reference to json web token data
+```js
+  Primo.explore.helper.jwtData()
+```  
+### Returns a promise to userDetails
+```js
+  Primo.explore.helper.userDetails()
+```  
+### Make a component blink
+```js
+  Primo.explore.helper.blink(component, numberOfBlinks = 4)
+```  
 
 # UI<a name="ui"></a>
 
 ### Activate the UI
 ```js
-  Primo.expose.ui.toggle()
+  Primo.explore.ui.toggle()
 ```  
 ![PRIMO Domain Object Model UI](./img/primo-explore-dom_ui.gif "PRIMO Domain Object Model UI")
