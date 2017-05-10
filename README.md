@@ -99,7 +99,6 @@ For now it is not possible to access the $scope and $ctrl without the debug info
 # User<a name="user"></a>
 ```Primo.user``` returns a promise
 
-## user<a name="user"></a>
 ### Get user ID
 ```js
   Primo.user.then(user => console.log(user.id));
@@ -139,7 +138,7 @@ For now it is not possible to access the $scope and $ctrl without the debug info
   Primo.view.then(view => console.log(view.interfaceLanguage));
 ```
 ## ip
-### Get IP address of your Primo session
+### Get IP address of your Primo view
 ```js
   Primo.view.then(view => console.log(view.ip.address));
 ```
