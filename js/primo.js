@@ -80,7 +80,7 @@ export default class Primo {
    */
   static get user() {
     return new Promise((resolve, reject) => {
-      Helper.userDetails().then((userDetails)=>{
+      Helper.userDetailsHTTP().then((userDetails)=>{
         resolve(new User(userDetails));
       });
     });

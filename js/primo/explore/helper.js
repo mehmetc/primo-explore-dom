@@ -87,7 +87,16 @@ export default class Helper {
     }
 
     static userDetails() {
-      return this.userSessionManagerService().$localForage.getItem('userDetails');
+      return new Promise((resolve, reject) => {
+        this.userSessionManagerService().$localForage.getItem('userDetails').then(userDetails => resolve(userDetails));
+      });
+    }
+
+    static userDetailsHTTP() {
+      let viewCode = this.jwtData().viewId || window.appConfig['vid'];
+      return new Promise( (resolve,reject) => {
+        this.http.get(`/primo_library/libweb/webservices/rest/v1/usersettings?vid=${viewCode}`).then(userDetails => resolve(userDetails.data));
+      });
     }
 
     static blink(component, numberOfBlinks = 4) {

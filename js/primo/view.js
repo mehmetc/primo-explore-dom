@@ -6,9 +6,9 @@ export default class View {
       let jwtData = Helper.jwtData();
 
       return {
-        code: jwtData.viewId,
+        code: jwtData.viewId || window.appConfig['vid'],
         institution: {
-            code: jwtData.viewInstitutionCode || window.appConfig['vid'],
+            code: jwtData.viewInstitutionCode,
             name: window.appConfig['primo-view']['attributes-map'].institution
         },
         interfaceLanguage: uSms.getUserLanguage() || window.appConfig['primo-view']['attributes-map'].interfaceLanguage,

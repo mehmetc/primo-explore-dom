@@ -1,7 +1,7 @@
 import Helper from './explore/helper'
 
 export default class User {
-  constructor(userDetails) {
+  constructor(userDetails = {}) {
     let uSms = Helper.userSessionManagerService();
     let jwtData = Helper.jwtData();
     let self = this;
@@ -19,6 +19,4 @@ export default class User {
         }
       };
   }
-/// fetch('/primo_library/libweb/webservices/rest/v1/usersettings')
-
 }

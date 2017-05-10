@@ -156,7 +156,7 @@ var Primo = function () {
     key: 'user',
     get: function get() {
       return new Promise(function (resolve, reject) {
-        _helper2.default.userDetails().then(function (userDetails) {
+        _helper2.default.userDetailsHTTP().then(function (userDetails) {
           resolve(new _user2.default(userDetails));
         });
       });
@@ -427,7 +427,25 @@ var Helper = function () {
     }, {
         key: 'userDetails',
         value: function userDetails() {
-            return this.userSessionManagerService().$localForage.getItem('userDetails');
+            var _this = this;
+
+            return new Promise(function (resolve, reject) {
+                _this.userSessionManagerService().$localForage.getItem('userDetails').then(function (userDetails) {
+                    return resolve(userDetails);
+                });
+            });
+        }
+    }, {
+        key: 'userDetailsHTTP',
+        value: function userDetailsHTTP() {
+            var _this2 = this;
+
+            var viewCode = this.jwtData().viewId || window.appConfig['vid'];
+            return new Promise(function (resolve, reject) {
+                _this2.http.get('/primo_library/libweb/webservices/rest/v1/usersettings?vid=' + viewCode).then(function (userDetails) {
+                    return resolve(userDetails.data);
+                });
+            });
         }
     }, {
         key: 'blink',
@@ -867,7 +885,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var User = function User(userDetails) {
+var User = function User() {
+    var userDetails = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, User);
 
     var uSms = _helper2.default.userSessionManagerService();
@@ -886,10 +906,7 @@ var User = function User(userDetails) {
             return jwtData.onCampus == "true" ? true : false;
         }
     };
-}
-/// fetch('/primo_library/libweb/webservices/rest/v1/usersettings')
-
-;
+};
 
 exports.default = User;
 
@@ -915,9 +932,9 @@ var View = function View() {
   var jwtData = _helper2.default.jwtData();
 
   return {
-    code: jwtData.viewId,
+    code: jwtData.viewId || window.appConfig['vid'],
     institution: {
-      code: jwtData.viewInstitutionCode || window.appConfig['vid'],
+      code: jwtData.viewInstitutionCode,
       name: window.appConfig['primo-view']['attributes-map'].institution
     },
     interfaceLanguage: uSms.getUserLanguage() || window.appConfig['primo-view']['attributes-map'].interfaceLanguage,
