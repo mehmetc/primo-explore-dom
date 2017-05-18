@@ -32,8 +32,12 @@ class Component {
     if (scope) {
       if (Object.keys(scope).includes('$ctrl')) {
           return scope.$ctrl
+      } else if(Object.keys(scope).includes('ctrl')) {
+          return scope.ctrl
       } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('$ctrl')){
           return scope.$$childTail.$ctrl;
+      } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('ctrl')){
+          return scope.$$childTail.ctrl;
       } else {
           console.error('No $ctrl defined');
       }

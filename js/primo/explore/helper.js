@@ -99,6 +99,24 @@ export default class Helper {
       });
     }
 
+    static userFinesHTTP() {
+      return new Promise((resolve, reject) => {
+        this.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/fines').then(userFines => {
+          try {
+            let data = userFines.data;
+            if (data.status == 'ok') {
+                let fines = data.data.fines;
+                resolve(fines.fine);
+            }
+          }
+          catch(error){
+            resolve([]);
+          }
+        }
+        );
+      });
+    }
+
     static blink(component, numberOfBlinks = 4) {
         let intervalId = null;
         let borderElement = null;

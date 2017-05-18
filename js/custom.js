@@ -1,7 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports = "<style>.f18{min-height:18px;min-width:18px;height:18px;width:18px}</style><div id=\"explorerUiContainer\" ng-show=\"$ctrl.isActive()\" style=\"position:absolute;top:10px;height:90vh;background-color:#fff;z-index:1000000\">\n    <md-sidenav class=\"md-sidenav-left\" md-component-id=\"primo-explorer\" md-is-locked-open=\"$mdMedia('gt-md')\" md-whiteframe=\"4\" style=\"height:100%\">\n        <header id=\"explorerUiHeader\" ng-mousedown=\"$ctrl.headerMove($event)\">\n            <md-toolbar>\n                <div class=\"md-toolbar-tools\">\n                    <h2 flex md-truncate>PrimoExplorer {{$ctrl.version}}</h2>\n                    <md-button class=\"md-icon-button\" ng-click=\"$ctrl.toggle()\" aria-label=\"Close\" title=\"Close\">\n                        <md-icon md-svg-icon=\"primo-ui:close\"></md-icon>\n                    </md-button>\n                </div>\n            </md-toolbar>\n        </header>\n\n        <section id=\"pe-components\">\n            <div flex id=\"pe-components-list\" ng-hide=\"$ctrl.selectedComponentDetailShow\">\n                <section style=\"background-color:#eee\">\n                    <div layout=\"row\">\n                        <md-button ng-click=\"$ctrl.refreshComponents()\">Reload</md-button>\n                        <md-input-container flex md-no-float>\n                            <label>Filter</label>\n                            <input ng-model=\"$ctrl.componentFilter\">\n                        </md-input-container>\n                    </div>\n                </section>\n                <md-content style=\"height:90%\">\n                    <md-list class=\"md-dense\">\n                        <md-list-item ng-repeat=\"component in $ctrl.components | filter:$ctrl.componentFilter\" ng-click=\"$ctrl.loadComponent(component)\">\n                            <span>{{component}}</span>\n                            <md-divider ng-if=\"!$last\"></md-divider>\n                        </md-list-item>\n                    </md-list>\n                </md-content>\n            </div>\n\n            <div flex id=\"pe-components-detail\" ng-show=\"$ctrl.selectedComponentDetailShow\">\n                <section style=\"height:100%\">\n                    <md-toolbar class=\"md-hue-2\" style=\"font-size:.8em;min-height:2.5em;height:2.5em\">\n                        <div class=\"md-toolbar-tools\" style=\"font-size:.8em;min-height:2.5em;height:2.5em\">\n\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.selectedComponentDetailShow = false\" aria-label=\"Back\" title=\"Back\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:chevron-left\"></md-icon>\n                            </md-button>\n\n                              <h2 flex md-truncate>{{$ctrl.selectedComponentName}}</h2>\n\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.blink()\" aria-label=\"Blink component\" title=\"Blink component\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:bell\"></md-icon>\n                            </md-button>\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.pushToConsole()\" aria-label=\"Push to console\" title=\"Push to console\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:open-in-new\"></md-icon>\n                            </md-button>\n                        </div>\n                    </md-toolbar>\n                    <section style=\"background-color:#eee\">\n                        <div layout=\"row\" layout-align=\"center center\">\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.selectedComponentElementPrev()\" aria-label=\"Previous element\" title=\"Previous element\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:chevron-left\"></md-icon>\n                            </md-button>\n                            <div layout-align=\"center center\">\n                                <div>{{$ctrl.selectedComponentElementIdx+1}}/{{$ctrl.selectedComponentElementCount}}</div>\n                            </div>\n                            <md-button class=\"md-icon-button\" ng-click=\"$ctrl.selectedComponentElementNext()\" aria-label=\"Next element\" title=\"Next element\">\n                                <md-icon class=\"f18\" md-svg-icon=\"primo-ui:chevron-right\"></md-icon>\n                            </md-button>\n                        </div>\n                        <div layout=\"row\" layout-align=\"center center\">\n                          <div flex md-truncate style=\"font-size:10px\">css({{$ctrl.selectedComponentElement.cssPath}})</div>\n                        </div>\n                    </section>\n                    <section>\n                        <md-list>\n                          <md-list-item ng-repeat=\"key in $ctrl.selectedComponentElementCtrlKeys()\">\n                              {{key}}\n                          </md-list-item>\n                        </md-list>\n                    </section>\n                </section>\n            </div>\n        </section>\n    </md-sidenav>\n</div>";
-
-},{}],2:[function(require,module,exports){
 'use strict';
 
 var _primo = require('./primo');
@@ -12,7 +9,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 window.Primo = _primo2.default;
 
-},{"./primo":3}],3:[function(require,module,exports){
+},{"./primo":2}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -157,7 +154,9 @@ var Primo = function () {
     get: function get() {
       return new Promise(function (resolve, reject) {
         _helper2.default.userDetailsHTTP().then(function (userDetails) {
-          resolve(new _user2.default(userDetails));
+          _helper2.default.userFinesHTTP().then(function (userFines) {
+            resolve(new _user2.default({ details: userDetails, fines: userFines }));
+          });
         });
       });
     }
@@ -168,7 +167,7 @@ var Primo = function () {
 
 exports.default = Primo;
 
-},{"./primo/explore":4,"./primo/explore/helper":6,"./primo/facets":8,"./primo/records":9,"./primo/user":10,"./primo/view":11}],4:[function(require,module,exports){
+},{"./primo/explore":3,"./primo/explore/helper":5,"./primo/facets":7,"./primo/records":8,"./primo/user":9,"./primo/view":10}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -233,7 +232,7 @@ var Explore = function () {
 
 exports.default = Explore;
 
-},{"./explore/components":5,"./explore/helper":6,"./explore/ui":7}],5:[function(require,module,exports){
+},{"./explore/components":4,"./explore/helper":5,"./explore/ui":6}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -280,8 +279,12 @@ var Component = function () {
       if (scope) {
         if (Object.keys(scope).includes('$ctrl')) {
           return scope.$ctrl;
+        } else if (Object.keys(scope).includes('ctrl')) {
+          return scope.ctrl;
         } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('$ctrl')) {
           return scope.$$childTail.$ctrl;
+        } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('ctrl')) {
+          return scope.$$childTail.ctrl;
         } else {
           console.error('No $ctrl defined');
         }
@@ -342,11 +345,11 @@ var Components = function () {
 
 exports.default = Components;
 
-},{"../../vendor/css-selector-generator.js":12,"./helper":6}],6:[function(require,module,exports){
+},{"../../vendor/css-selector-generator.js":11,"./helper":5}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -354,215 +357,234 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Helper = function () {
-    function Helper() {
-        _classCallCheck(this, Helper);
+  function Helper() {
+    _classCallCheck(this, Helper);
+  }
+
+  _createClass(Helper, null, [{
+    key: 'isDebugEnabled',
+    value: function isDebugEnabled() {
+      return typeof angular.element(document.querySelector('prm-logo')).scope() == 'undefined' ? false : true;
     }
-
-    _createClass(Helper, null, [{
-        key: 'isDebugEnabled',
-        value: function isDebugEnabled() {
-            return typeof angular.element(document.querySelector('prm-logo')).scope() == 'undefined' ? false : true;
+  }, {
+    key: 'isPrimoAvailable',
+    value: function isPrimoAvailable() {
+      if ('undefined' !== typeof window.angular) {
+        if (document.querySelector('primo-explore') !== null) {
+          return true;
         }
-    }, {
-        key: 'isPrimoAvailable',
-        value: function isPrimoAvailable() {
-            if ('undefined' !== typeof window.angular) {
-                if (document.querySelector('primo-explore') !== null) {
-                    return true;
-                }
+      }
+      return false;
+    }
+  }, {
+    key: 'querySelectorAll',
+    value: function querySelectorAll(selector) {
+      return Array.from(document.querySelectorAll(selector));
+    }
+  }, {
+    key: 'injector',
+    value: function injector() {
+      var c = Primo.explore.components.get('primo-explore');
+      if (c && c.length > 0) {
+        var primoExplore = angular.element(c[0].element);
+        var injector = primoExplore.injector();
+        if (injector) {
+          return injector;
+        }
+      }
+
+      return null;
+    }
+  }, {
+    key: 'rootScope',
+    value: function rootScope() {
+      var injector = this.injector();
+      if (injector) {
+        var rootScope = injector.get('$rootScope');
+        if (rootScope) {
+          return rootScope;
+        }
+      }
+
+      return null;
+    }
+  }, {
+    key: 'userSessionManagerService',
+    value: function userSessionManagerService() {
+      var rootScope = this.rootScope();
+      if (rootScope) {
+        return rootScope.$$childHead.$ctrl.userSessionManagerService;
+      }
+
+      return null;
+    }
+  }, {
+    key: 'jwtData',
+    value: function jwtData() {
+      var uSMS = this.userSessionManagerService();
+      if (uSMS) {
+        var jwtData = uSMS.jwtUtilService.getDecodedToken() || {};
+        return jwtData;
+      }
+    }
+  }, {
+    key: 'userDetails',
+    value: function userDetails() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _this.userSessionManagerService().$localForage.getItem('userDetails').then(function (userDetails) {
+          return resolve(userDetails);
+        });
+      });
+    }
+  }, {
+    key: 'userDetailsHTTP',
+    value: function userDetailsHTTP() {
+      var _this2 = this;
+
+      var viewCode = this.jwtData().viewId || window.appConfig['vid'];
+      return new Promise(function (resolve, reject) {
+        _this2.http.get('/primo_library/libweb/webservices/rest/v1/usersettings?vid=' + viewCode).then(function (userDetails) {
+          return resolve(userDetails.data);
+        });
+      });
+    }
+  }, {
+    key: 'userFinesHTTP',
+    value: function userFinesHTTP() {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this3.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/fines').then(function (userFines) {
+          try {
+            var data = userFines.data;
+            if (data.status == 'ok') {
+              var fines = data.data.fines;
+              resolve(fines.fine);
             }
-            return false;
+          } catch (error) {
+            resolve([]);
+          }
+        });
+      });
+    }
+  }, {
+    key: 'blink',
+    value: function blink(component) {
+      var numberOfBlinks = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+
+      var intervalId = null;
+      var borderElement = null;
+      var index = Math.floor(Math.random() * (1000 - 1)) + 1;
+      var borderSelector = component.element.cssPath + index + 'Rect';
+
+      var createBorderElement = function createBorderElement() {
+        if (component && component.element) {
+          var elementRect = component.element.getBoundingClientRect();
+          var _borderElement = document.createElement('div');
+          var _index = Math.floor(Math.random() * (1000 - 1)) + 1;
+          _borderElement.setAttribute('id', borderSelector);
+          _borderElement.style.border = '3px solid red';
+          _borderElement.style.position = 'absolute';
+          _borderElement.style.top = elementRect.top + 'px';
+          _borderElement.style.height = elementRect.height + 'px';
+          _borderElement.style.width = elementRect.width + 'px';
+          _borderElement.style.left = elementRect.left + 'px';
+          document.body.appendChild(_borderElement);
+
+          return document.querySelector('#' + borderSelector);
         }
-    }, {
-        key: 'querySelectorAll',
-        value: function querySelectorAll(selector) {
-            return Array.from(document.querySelectorAll(selector));
+
+        return null;
+      };
+
+      var removeBorderElement = function removeBorderElement() {
+        if (borderElement) {
+          borderElement.remove();
         }
-    }, {
-        key: 'injector',
-        value: function injector() {
-            var c = Primo.explore.components.get('primo-explore');
-            if (c && c.length > 0) {
-                var primoExplore = angular.element(c[0].element);
-                var injector = primoExplore.injector();
-                if (injector) {
-                    return injector;
-                }
+      };
+
+      var blinkBorderElement = function blinkBorderElement() {
+        var numberOfBlinks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 4;
+
+        window.clearInterval(intervalId);
+
+        if (numberOfBlinks < 0) {
+          removeBorderElement();
+        } else {
+          borderElement.style.display = numberOfBlinks % 2 == 0 ? 'none' : 'block';
+          numberOfBlinks--;
+          intervalId = window.setInterval(blinkBorderElement, 1000, numberOfBlinks);
+        }
+      };
+
+      borderElement = createBorderElement();
+      blinkBorderElement(numberOfBlinks);
+    }
+  }, {
+    key: 'componentNames',
+    get: function get() {
+      var tags = document.getElementsByTagName('*');
+      var componentNames = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = tags[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var tag = _step.value;
+
+          var tagName = tag.localName;
+          if (/^prm-/.test(tagName) || /^primo-/.test(tagName)) {
+            if (!componentNames.includes(tagName)) {
+              componentNames.push(tagName);
             }
-
-            return null;
+          }
         }
-    }, {
-        key: 'rootScope',
-        value: function rootScope() {
-            var injector = this.injector();
-            if (injector) {
-                var rootScope = injector.get('$rootScope');
-                if (rootScope) {
-                    return rootScope;
-                }
-            }
-
-            return null;
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
         }
-    }, {
-        key: 'userSessionManagerService',
-        value: function userSessionManagerService() {
-            var rootScope = this.rootScope();
-            if (rootScope) {
-                return rootScope.$$childHead.$ctrl.userSessionManagerService;
-            }
+      }
 
-            return null;
+      componentNames = componentNames.sort().filter(function (e, i, a) {
+        return i === a.findIndex(function (e2) {
+          return e === e2;
+        });
+      });
+      return componentNames;
+    }
+  }, {
+    key: 'http',
+    get: function get() {
+      var injector = this.injector();
+      if (injector) {
+        var h = injector.get('$http');
+        if (h) {
+          return h;
         }
-    }, {
-        key: 'jwtData',
-        value: function jwtData() {
-            var uSMS = this.userSessionManagerService();
-            if (uSMS) {
-                var jwtData = uSMS.jwtUtilService.getDecodedToken() || {};
-                return jwtData;
-            }
-        }
-    }, {
-        key: 'userDetails',
-        value: function userDetails() {
-            var _this = this;
+      }
 
-            return new Promise(function (resolve, reject) {
-                _this.userSessionManagerService().$localForage.getItem('userDetails').then(function (userDetails) {
-                    return resolve(userDetails);
-                });
-            });
-        }
-    }, {
-        key: 'userDetailsHTTP',
-        value: function userDetailsHTTP() {
-            var _this2 = this;
+      return null;
+    }
+  }]);
 
-            var viewCode = this.jwtData().viewId || window.appConfig['vid'];
-            return new Promise(function (resolve, reject) {
-                _this2.http.get('/primo_library/libweb/webservices/rest/v1/usersettings?vid=' + viewCode).then(function (userDetails) {
-                    return resolve(userDetails.data);
-                });
-            });
-        }
-    }, {
-        key: 'blink',
-        value: function blink(component) {
-            var numberOfBlinks = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
-
-            var intervalId = null;
-            var borderElement = null;
-            var index = Math.floor(Math.random() * (1000 - 1)) + 1;
-            var borderSelector = component.element.cssPath + index + 'Rect';
-
-            var createBorderElement = function createBorderElement() {
-                if (component && component.element) {
-                    var elementRect = component.element.getBoundingClientRect();
-                    var _borderElement = document.createElement('div');
-                    var _index = Math.floor(Math.random() * (1000 - 1)) + 1;
-                    _borderElement.setAttribute('id', borderSelector);
-                    _borderElement.style.border = '3px solid red';
-                    _borderElement.style.position = 'absolute';
-                    _borderElement.style.top = elementRect.top + 'px';
-                    _borderElement.style.height = elementRect.height + 'px';
-                    _borderElement.style.width = elementRect.width + 'px';
-                    _borderElement.style.left = elementRect.left + 'px';
-                    document.body.appendChild(_borderElement);
-
-                    return document.querySelector('#' + borderSelector);
-                }
-
-                return null;
-            };
-
-            var removeBorderElement = function removeBorderElement() {
-                if (borderElement) {
-                    borderElement.remove();
-                }
-            };
-
-            var blinkBorderElement = function blinkBorderElement() {
-                var numberOfBlinks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 4;
-
-                window.clearInterval(intervalId);
-
-                if (numberOfBlinks < 0) {
-                    removeBorderElement();
-                } else {
-                    borderElement.style.display = numberOfBlinks % 2 == 0 ? 'none' : 'block';
-                    numberOfBlinks--;
-                    intervalId = window.setInterval(blinkBorderElement, 1000, numberOfBlinks);
-                }
-            };
-
-            borderElement = createBorderElement();
-            blinkBorderElement(numberOfBlinks);
-        }
-    }, {
-        key: 'componentNames',
-        get: function get() {
-            var tags = document.getElementsByTagName('*');
-            var componentNames = [];
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = tags[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var tag = _step.value;
-
-                    var tagName = tag.localName;
-                    if (/^prm-/.test(tagName) || /^primo-/.test(tagName)) {
-                        if (!componentNames.includes(tagName)) {
-                            componentNames.push(tagName);
-                        }
-                    }
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            componentNames = componentNames.sort().filter(function (e, i, a) {
-                return i === a.findIndex(function (e2) {
-                    return e === e2;
-                });
-            });
-            return componentNames;
-        }
-    }, {
-        key: 'http',
-        get: function get() {
-            var injector = this.injector();
-            if (injector) {
-                var h = injector.get('$http');
-                if (h) {
-                    return h;
-                }
-            }
-
-            return null;
-        }
-    }]);
-
-    return Helper;
+  return Helper;
 }();
 
 exports.default = Helper;
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -590,7 +612,7 @@ var Ui = function () {
     value: function _createModule() {
       var vmUi = this;
       return angular.module("explorerUi", ['ngMaterial']).component("explorerUi", {
-        templateUrl: 'primoExploreDOM',
+        templateUrl: 'nuDashboard.html',
         controller: ['$http', '$scope', function ($http, $scope) {
           var ctrl = this;
           ctrl.version = Primo.version || '';
@@ -715,7 +737,7 @@ var Ui = function () {
       }).config(function ($mdIconProvider) {
         $mdIconProvider.iconSet('primo-ui', 'img/svg/svg-primo-ui.svg', 18);
       }).run(function ($templateCache) {
-        $templateCache.put('primoExploreDOM', require('../../../html/nuDashboard.html'));
+        $templateCache.put('nuDashboard.html', '<style>\n    .f18 {\n        min-height: 18px;\n        min-width: 18px;\n        height: 18px;\n        width: 18px;\n    }\n</style>\n\n<div id=\'explorerUiContainer\' ng-show="$ctrl.isActive()" style=\'position:absolute;top:10px;height:90vh;background-color:white;z-index:1000000;\'>\n    <md-sidenav class="md-sidenav-left" md-component-id="primo-explorer" md-is-locked-open="$mdMedia(\'gt-md\')" md-whiteframe="4" style="height:100%;">\n        <header id=\'explorerUiHeader\' ng-mousedown=\'$ctrl.headerMove($event)\'>\n            <md-toolbar>\n                <div class="md-toolbar-tools">\n                    <h2 flex md-truncate>PrimoExplorer {{$ctrl.version}}</h2>\n                    <md-button class=\'md-icon-button\' ng-click="$ctrl.toggle()" aria-label="Close" title=\'Close\'>\n                        <md-icon md-svg-icon="primo-ui:close"></md-icon>\n                    </md-button>\n                </div>\n            </md-toolbar>\n        </header>\n\n        <section id=\'pe-components\'>\n            <div flex id=\'pe-components-list\' ng-hide=\'$ctrl.selectedComponentDetailShow\'>\n                <section style=\'background-color:#eee;\'>\n                    <div layout=\'row\'>\n                        <md-button ng-click=\'$ctrl.refreshComponents()\'>Reload</md-button>\n                        <md-input-container flex md-no-float>\n                            <label>Filter</label>\n                            <input ng-model="$ctrl.componentFilter">\n                        </md-input-container>\n                    </div>\n                </section>\n                <md-content style="height:90%;">\n                    <md-list class="md-dense">\n                        <md-list-item ng-repeat="component in $ctrl.components | filter:$ctrl.componentFilter" ng-click="$ctrl.loadComponent(component)">\n                            <span>{{component}}</span>\n                            <md-divider ng-if="!$last"></md-divider>\n                        </md-list-item>\n                    </md-list>\n                </md-content>\n            </div>\n\n            <div flex id=\'pe-components-detail\' ng-show=\'$ctrl.selectedComponentDetailShow\'>\n                <section style=\'height:100%\'>\n                    <md-toolbar class=\'md-hue-2\' style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">\n                        <div class="md-toolbar-tools" style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">\n\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentDetailShow = false" aria-label="Back" title="Back">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-left"></md-icon>\n                            </md-button>\n\n                              <h2 flex md-truncate>{{$ctrl.selectedComponentName}}</h2>\n\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.blink()" aria-label="Blink component" title="Blink component">\n                                <md-icon class="f18" md-svg-icon="primo-ui:bell"></md-icon>\n                            </md-button>\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.pushToConsole()" aria-label="Push to console" title="Push to console">\n                                <md-icon class="f18" md-svg-icon="primo-ui:open-in-new"></md-icon>\n                            </md-button>\n                        </div>\n                    </md-toolbar>\n                    <section style="background-color:#eee;">\n                        <div layout="row" layout-align="center center">\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentElementPrev()" aria-label="Previous element" title="Previous element">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-left"></md-icon>\n                            </md-button>\n                            <div layout-align="center center">\n                                <div>{{$ctrl.selectedComponentElementIdx+1}}/{{$ctrl.selectedComponentElementCount}}</div>\n                            </div>\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentElementNext()" aria-label="Next element" title="Next element">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-right"></md-icon>\n                            </md-button>\n                        </div>\n                        <div layout="row" layout-align="center center">\n                          <div flex md-truncate style="font-size:10px;">css({{$ctrl.selectedComponentElement.cssPath}})</div>\n                        </div>\n                    </section>\n                    <section>\n                        <md-list>\n                          <md-list-item ng-repeat="key in $ctrl.selectedComponentElementCtrlKeys()">\n                              {{key}}\n                          </md-list-item>\n                        </md-list>\n                    </section>\n                </section>\n            </div>\n        </section>\n    </md-sidenav>\n</div>\n');
       });
     }
   }, {
@@ -753,7 +775,7 @@ var Ui = function () {
 
 exports.default = Ui;
 
-},{"../../../html/nuDashboard.html":1}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -810,7 +832,7 @@ var Facets = function () {
 
 exports.default = Facets;
 
-},{"./explore/components":5,"./explore/helper":6}],9:[function(require,module,exports){
+},{"./explore/components":4,"./explore/helper":5}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -870,11 +892,11 @@ var Records = function () {
 
 exports.default = Records;
 
-},{"./explore/components":5,"./explore/helper":6}],10:[function(require,module,exports){
+},{"./explore/components":4,"./explore/helper":5}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _helper = require('./explore/helper');
@@ -886,31 +908,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var User = function User() {
-    var userDetails = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { details: {}, fines: {} };
 
-    _classCallCheck(this, User);
+  _classCallCheck(this, User);
 
-    var uSms = _helper2.default.userSessionManagerService();
-    var jwtData = _helper2.default.jwtData();
-    var self = this;
+  var uSms = _helper2.default.userSessionManagerService();
+  var jwtData = _helper2.default.jwtData();
+  var self = this;
 
-    return {
-        id: jwtData.user || '',
-        email: userDetails.email || '-',
-        name: jwtData.userName || 'Guest',
-        display_name: uSms.getUserNameForDisplay(),
-        isLoggedIn: function isLoggedIn() {
-            return uSms.getUserName().length > 0;
-        },
-        isOnCampus: function isOnCampus() {
-            return jwtData.onCampus == "true" ? true : false;
-        }
-    };
+  return {
+    id: jwtData.user || '',
+    email: user.details.email || '-',
+    name: jwtData.userName || 'Guest',
+    display_name: uSms.getUserNameForDisplay(),
+    isLoggedIn: function isLoggedIn() {
+      return uSms.getUserName().length > 0;
+    },
+    isOnCampus: function isOnCampus() {
+      return jwtData.onCampus == "true" ? true : false;
+    },
+    fines: user.fines
+  };
 };
 
 exports.default = User;
 
-},{"./explore/helper":6}],11:[function(require,module,exports){
+},{"./explore/helper":5}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -946,7 +969,7 @@ var View = function View() {
 
 exports.default = View;
 
-},{"./explore/helper":6}],12:[function(require,module,exports){
+},{"./explore/helper":5}],11:[function(require,module,exports){
 'use strict';
 
 (function () {
@@ -1262,4 +1285,4 @@ exports.default = View;
   }
 }).call(undefined);
 
-},{}]},{},[2]);
+},{}]},{},[1]);
