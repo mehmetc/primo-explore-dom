@@ -90,7 +90,7 @@ var Primo = function () {
      * @return {string}
      */
     get: function get() {
-      return "0.0.6";
+      return "0.0.7";
     }
   }, {
     key: 'explore',

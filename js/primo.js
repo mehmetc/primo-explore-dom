@@ -14,7 +14,7 @@ export default class Primo {
    * @return {string}
    */
   static get version() {
-    return "0.0.6";
+    return "0.0.7";
   }
 
   /**
