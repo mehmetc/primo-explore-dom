@@ -1,7 +1,12 @@
 
 ### This is a __pre-release__: you can help us make it better.
 
-### Current version 0.0.5
+### Current version 0.0.6
+- user fines
+- better ctrl discovery
+- removed angularLoad reference
+
+### version 0.0.5
 - refactored: user, view, records, facets, ui
 - added user.email
 - added view.interfaceLanguage
@@ -118,6 +123,14 @@ For now it is not possible to access the $scope and $ctrl without the debug info
 ### is user on campus
 ```js
   Primo.user.then(user => console.log(user.isOnCampus()));  
+```
+### Print number of fines for user
+```js
+  Primo.user.then(user => console.log(user.fines.length));
+```
+### Print total of all fines
+```js
+  Primo.user.then(user => console.log(user.fines.map(f => parseFloat(f.finesum)).reduce((p,c)=> p+c)))
 ```
 ## view<a name="view"></a>
 ```Primo.view``` returns a promise
