@@ -90,7 +90,7 @@ var Primo = function () {
      * @return {string}
      */
     get: function get() {
-      return "0.0.7";
+      return "0.0.8";
     }
   }, {
     key: 'explore',
@@ -462,6 +462,9 @@ var Helper = function () {
             if (data.status == 'ok') {
               var fines = data.data.fines;
               resolve(fines.fine);
+            } else {
+              console.log('No fines');
+              resolve([]);
             }
           } catch (error) {
             resolve([]);

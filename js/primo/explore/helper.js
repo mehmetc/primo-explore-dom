@@ -107,6 +107,9 @@ export default class Helper {
             if (data.status == 'ok') {
                 let fines = data.data.fines;
                 resolve(fines.fine);
+            } else {
+              console.log('No fines');
+              resolve([]);
             }
           }
           catch(error){
