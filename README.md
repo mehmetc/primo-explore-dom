@@ -1,7 +1,13 @@
 
 ### This is a __pre-release__: you can help us make it better.
 
-### Current version 0.0.7
+### Current version 0.0.8
+- refactoring of ui
+- better component ctrl discovery
+- ui component property display
+- unhandle promise
+
+### version 0.0.7
 - user fines
 - better ctrl discovery
 - removed angularLoad reference
