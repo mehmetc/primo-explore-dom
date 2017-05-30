@@ -277,14 +277,15 @@ var Component = function () {
     value: function ctrl() {
       var scope = this.scope();
       if (scope) {
+        var scopeChild = scope.$$childTail;
         if (Object.keys(scope).includes('$ctrl')) {
           return scope.$ctrl;
         } else if (Object.keys(scope).includes('ctrl')) {
           return scope.ctrl;
-        } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('$ctrl')) {
-          return scope.$$childTail.$ctrl;
-        } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('ctrl')) {
-          return scope.$$childTail.ctrl;
+        } else if (scopeChild && Object.keys(scopeChild).includes('$ctrl')) {
+          return scopeChild.$ctrl;
+        } else if (scopeChild && Object.keys(scopeChild).includes('ctrl')) {
+          return scopeChild.ctrl;
         } else {
           console.error('No $ctrl defined');
         }
@@ -594,6 +595,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -606,6 +609,7 @@ var Ui = function () {
     //vmUi.active = false;
     vmUi._injectDOMElement();
     vmUi.module = vmUi._createModule();
+
     angular.bootstrap(document.querySelector('#explorerUi'), ['explorerUi']);
     vmUi.scope = angular.element(document.querySelector('#explorerUi')).scope();
   }
@@ -614,7 +618,7 @@ var Ui = function () {
     key: '_createModule',
     value: function _createModule() {
       var vmUi = this;
-      return angular.module("explorerUi", ['ngMaterial']).component("explorerUi", {
+      return angular.module("explorerUi", ['ngMaterial', 'angularLoad']).component("explorerUi", {
         templateUrl: 'nuDashboard.html',
         controller: ['$http', '$scope', function ($http, $scope) {
           var ctrl = this;
@@ -647,10 +651,12 @@ var Ui = function () {
               ctrl.selectedComponentElementIdx = index;
               ctrl.selectedComponentElementCount = ctrl.selectedComponent.length;
               ctrl.selectedComponentElement = ctrl.selectedComponent[index];
+              ctrl.selectedComponentElementProperties = ctrl.selectedComponentElementCtrlKeys();
             } else {
               ctrl.selectedComponentElementIdx = 0;
               ctrl.selectedComponentElementCount = 0;
               ctrl.selectedComponentElement = null;
+              ctrl.selectedComponentElementProperties = [];
             }
           };
 
@@ -667,14 +673,100 @@ var Ui = function () {
             ctrl.refreshComponents();
           };
 
-          ctrl.selectedComponentElementCtrlKeys = function () {
+          ctrl.rselectedComponentElementCtrlKeys = function () {
             if (ctrl.selectedComponentElement) {
-              var keys = ctrl.selectedComponentElement.ctrl();
-              if (keys) {
-                return Object.keys(keys);
+              var selectedCtrl = ctrl.selectedComponentElement.ctrl();
+              if (selectedCtrl) {
+                return Object.keys(selectedCtrl); //.map((d) => {return {key: d, value:'', type:''}});
               }
             }
             return [];
+          };
+
+          ctrl.selectedComponentElementCtrlKeys = function () {
+            var sce = [];
+            if (ctrl.selectedComponentElement) {
+              var selectedCtrl = ctrl.selectedComponentElement.ctrl();
+              if (selectedCtrl) {
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                  for (var _iterator = Object.keys(selectedCtrl)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var key = _step.value;
+
+                    if (selectedCtrl.hasOwnProperty(key)) {
+                      switch (_typeof(selectedCtrl[key])) {
+                        case 'string':
+                          sce.push({
+                            key: key,
+                            value: '"' + selectedCtrl[key] + '"',
+                            type: 'string'
+                          });
+                          break;
+                        case 'boolean':
+                          sce.push({
+                            key: key,
+                            value: '' + selectedCtrl[key],
+                            type: 'boolean'
+                          });
+                          break;
+                        case 'number':
+                          sce.push({
+                            key: key,
+                            value: '' + selectedCtrl[key],
+                            type: 'number'
+                          });
+                          break;
+                        case 'undefined':
+                          sce.push({
+                            key: key,
+                            value: "Undefined",
+                            type: 'undefined'
+                          });
+                          break;
+                        case 'null':
+                          sce.push({
+                            key: key,
+                            value: "Null",
+                            type: 'null'
+                          });
+                          break;
+                        default:
+                          try {
+                            sce.push({
+                              key: key,
+                              value: '' + selectedCtrl[key].constructor.name,
+                              type: _typeof(selectedCtrl[key])
+                            });
+                          } catch (e) {
+                            sce.push({
+                              key: key,
+                              value: '' + _typeof(selectedCtrl[key]),
+                              type: _typeof(selectedCtrl[key])
+                            });
+                          }
+                      }
+                    }
+                  }
+                } catch (err) {
+                  _didIteratorError = true;
+                  _iteratorError = err;
+                } finally {
+                  try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                      _iterator.return();
+                    }
+                  } finally {
+                    if (_didIteratorError) {
+                      throw _iteratorError;
+                    }
+                  }
+                }
+              }
+            }
+            return sce;
           };
 
           ctrl.selectedComponentElementPrev = function () {
@@ -740,7 +832,7 @@ var Ui = function () {
       }).config(function ($mdIconProvider) {
         $mdIconProvider.iconSet('primo-ui', 'img/svg/svg-primo-ui.svg', 18);
       }).run(function ($templateCache) {
-        $templateCache.put('nuDashboard.html', '<style>\n    .f18 {\n        min-height: 18px;\n        min-width: 18px;\n        height: 18px;\n        width: 18px;\n    }\n</style>\n\n<div id=\'explorerUiContainer\' ng-show="$ctrl.isActive()" style=\'position:absolute;top:10px;height:90vh;background-color:white;z-index:1000000;\'>\n    <md-sidenav class="md-sidenav-left" md-component-id="primo-explorer" md-is-locked-open="$mdMedia(\'gt-md\')" md-whiteframe="4" style="height:100%;">\n        <header id=\'explorerUiHeader\' ng-mousedown=\'$ctrl.headerMove($event)\'>\n            <md-toolbar>\n                <div class="md-toolbar-tools">\n                    <h2 flex md-truncate>PrimoExplorer {{$ctrl.version}}</h2>\n                    <md-button class=\'md-icon-button\' ng-click="$ctrl.toggle()" aria-label="Close" title=\'Close\'>\n                        <md-icon md-svg-icon="primo-ui:close"></md-icon>\n                    </md-button>\n                </div>\n            </md-toolbar>\n        </header>\n\n        <section id=\'pe-components\'>\n            <div flex id=\'pe-components-list\' ng-hide=\'$ctrl.selectedComponentDetailShow\'>\n                <section style=\'background-color:#eee;\'>\n                    <div layout=\'row\'>\n                        <md-button ng-click=\'$ctrl.refreshComponents()\'>Reload</md-button>\n                        <md-input-container flex md-no-float>\n                            <label>Filter</label>\n                            <input ng-model="$ctrl.componentFilter">\n                        </md-input-container>\n                    </div>\n                </section>\n                <md-content style="height:90%;">\n                    <md-list class="md-dense">\n                        <md-list-item ng-repeat="component in $ctrl.components | filter:$ctrl.componentFilter" ng-click="$ctrl.loadComponent(component)">\n                            <span>{{component}}</span>\n                            <md-divider ng-if="!$last"></md-divider>\n                        </md-list-item>\n                    </md-list>\n                </md-content>\n            </div>\n\n            <div flex id=\'pe-components-detail\' ng-show=\'$ctrl.selectedComponentDetailShow\'>\n                <section style=\'height:100%\'>\n                    <md-toolbar class=\'md-hue-2\' style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">\n                        <div class="md-toolbar-tools" style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">\n\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentDetailShow = false" aria-label="Back" title="Back">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-left"></md-icon>\n                            </md-button>\n\n                              <h2 flex md-truncate>{{$ctrl.selectedComponentName}}</h2>\n\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.blink()" aria-label="Blink component" title="Blink component">\n                                <md-icon class="f18" md-svg-icon="primo-ui:bell"></md-icon>\n                            </md-button>\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.pushToConsole()" aria-label="Push to console" title="Push to console">\n                                <md-icon class="f18" md-svg-icon="primo-ui:open-in-new"></md-icon>\n                            </md-button>\n                        </div>\n                    </md-toolbar>\n                    <section style="background-color:#eee;">\n                        <div layout="row" layout-align="center center">\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentElementPrev()" aria-label="Previous element" title="Previous element">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-left"></md-icon>\n                            </md-button>\n                            <div layout-align="center center">\n                                <div>{{$ctrl.selectedComponentElementIdx+1}}/{{$ctrl.selectedComponentElementCount}}</div>\n                            </div>\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentElementNext()" aria-label="Next element" title="Next element">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-right"></md-icon>\n                            </md-button>\n                        </div>\n                        <div layout="row" layout-align="center center">\n                          <div flex md-truncate style="font-size:10px;">css({{$ctrl.selectedComponentElement.cssPath}})</div>\n                        </div>\n                    </section>\n                    <section>\n                        <md-list>\n                          <md-list-item ng-repeat="key in $ctrl.selectedComponentElementCtrlKeys()">\n                              {{key}}\n                          </md-list-item>\n                        </md-list>\n                    </section>\n                </section>\n            </div>\n        </section>\n    </md-sidenav>\n</div>\n');
+        $templateCache.put('nuDashboard.html', '<style>\n    .f18 {\n        min-height: 18px;\n        min-width: 18px;\n        height: 18px;\n        width: 18px;\n    }\n</style>\n<!-- $mdMedia(\'gt-md\') -->\n<div id=\'explorerUiContainer\' ng-show="$ctrl.isActive()" style=\'position:absolute;top:10px;height:90vh;background-color:white;z-index:1000000;\'>\n    <md-sidenav class="md-sidenav-left" md-component-id="primo-explorer" md-is-locked-open="true" md-whiteframe="4" style="height:100%;">\n        <header id=\'explorerUiHeader\' ng-mousedown=\'$ctrl.headerMove($event)\'>\n            <md-toolbar>\n                <div class="md-toolbar-tools">\n                    <h2 flex md-truncate>PrimoExplorer {{$ctrl.version}}</h2>\n                    <md-button class=\'md-icon-button\' ng-click="$ctrl.toggle()" aria-label="Close" title=\'Close\'>\n                        <md-icon md-svg-icon="primo-ui:close"></md-icon>\n                    </md-button>\n                </div>\n            </md-toolbar>\n        </header>\n\n        <section id=\'pe-components\'>\n            <div flex id=\'pe-components-list\' ng-hide=\'$ctrl.selectedComponentDetailShow\'>\n                <section style=\'background-color:#eee;\'>\n                    <div layout=\'row\'>\n                        <md-button ng-click=\'$ctrl.refreshComponents()\'>Reload</md-button>\n                        <md-input-container flex md-no-float>\n                            <label>Filter</label>\n                            <input ng-model="$ctrl.componentFilter">\n                        </md-input-container>\n                    </div>\n                </section>\n                <md-content style="height:90%;">\n                    <md-list class="md-dense">\n                        <md-list-item ng-repeat="component in $ctrl.components | filter:$ctrl.componentFilter" ng-click="$ctrl.loadComponent(component);$event.stopPropagation();">\n                            <span>{{component}}</span>\n                            <md-divider ng-if="!$last"></md-divider>\n                        </md-list-item>\n                    </md-list>\n                </md-content>\n            </div>\n\n            <div flex id=\'pe-components-detail\' ng-show=\'$ctrl.selectedComponentDetailShow\'>\n                <section style=\'height:100%\'>\n                    <md-toolbar class=\'md-hue-2\' style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">\n                        <div class="md-toolbar-tools" style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">\n\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentDetailShow = false" aria-label="Back" title="Back">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-left"></md-icon>\n                            </md-button>\n\n                              <h2 flex md-truncate>{{$ctrl.selectedComponentName}}</h2>\n\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.blink()" aria-label="Blink component" title="Blink component">\n                                <md-icon class="f18" md-svg-icon="primo-ui:bell"></md-icon>\n                            </md-button>\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.pushToConsole()" aria-label="Push to console" title="Push to console">\n                                <md-icon class="f18" md-svg-icon="primo-ui:open-in-new"></md-icon>\n                            </md-button>\n                        </div>\n                    </md-toolbar>\n                    <section style="background-color:#eee;">\n                        <div layout="row" layout-align="center center">\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentElementPrev()" aria-label="Previous element" title="Previous element">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-left"></md-icon>\n                            </md-button>\n                            <div layout-align="center center">\n                                <div>{{$ctrl.selectedComponentElementIdx+1}}/{{$ctrl.selectedComponentElementCount}}</div>\n                            </div>\n                            <md-button class=\'md-icon-button\' ng-click="$ctrl.selectedComponentElementNext()" aria-label="Next element" title="Next element">\n                                <md-icon class="f18" md-svg-icon="primo-ui:chevron-right"></md-icon>\n                            </md-button>\n                        </div>\n                        <div layout="row" layout-align="center center">\n                            <input flex style="font-size:10px;text-align:center;" type="text" name="" value="{{$ctrl.selectedComponentElement.cssPath}}">\n                        </div>\n                    </section>\n                    <section>\n                        <md-list>\n                          <md-list-item ng-repeat="property in $ctrl.selectedComponentElementProperties">\n                            <span>{{property.key}}:</span>\n                            <span class="md-secondary" style="overflow:hidden;text-overflow: ellipsis;white-space: nowrap;">{{property.value}}</span>\n                          </md-list-item>\n                        </md-list>\n                    </section>\n                </section>\n            </div>\n        </section>\n    </md-sidenav>\n</div>\n');
       });
     }
   }, {

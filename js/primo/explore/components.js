@@ -30,14 +30,15 @@ class Component {
   ctrl(){
     let scope = this.scope();
     if (scope) {
+      let scopeChild = scope.$$childTail;
       if (Object.keys(scope).includes('$ctrl')) {
           return scope.$ctrl
       } else if(Object.keys(scope).includes('ctrl')) {
           return scope.ctrl
-      } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('$ctrl')){
-          return scope.$$childTail.$ctrl;
-      } else if (scope.$$childTail && Object.keys(scope.$$childTail).includes('ctrl')){
-          return scope.$$childTail.ctrl;
+      } else if (scopeChild && Object.keys(scopeChild).includes('$ctrl')){
+          return scopeChild.$ctrl;
+      } else if (scopeChild && Object.keys(scopeChild).includes('ctrl')){
+          return scopeChild.ctrl;
       } else {
           console.error('No $ctrl defined');
       }

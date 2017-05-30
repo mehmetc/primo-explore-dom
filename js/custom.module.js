@@ -1,1 +1,1 @@
-var app = angular.module('viewCustom', []);
+//var app = angular.module('viewCustom', []);

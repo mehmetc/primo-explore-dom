@@ -6,9 +6,9 @@
         width: 18px;
     }
 </style>
-
+<!-- $mdMedia('gt-md') -->
 <div id='explorerUiContainer' ng-show="$ctrl.isActive()" style='position:absolute;top:10px;height:90vh;background-color:white;z-index:1000000;'>
-    <md-sidenav class="md-sidenav-left" md-component-id="primo-explorer" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4" style="height:100%;">
+    <md-sidenav class="md-sidenav-left" md-component-id="primo-explorer" md-is-locked-open="true" md-whiteframe="4" style="height:100%;">
         <header id='explorerUiHeader' ng-mousedown='$ctrl.headerMove($event)'>
             <md-toolbar>
                 <div class="md-toolbar-tools">
@@ -33,7 +33,7 @@
                 </section>
                 <md-content style="height:90%;">
                     <md-list class="md-dense">
-                        <md-list-item ng-repeat="component in $ctrl.components | filter:$ctrl.componentFilter" ng-click="$ctrl.loadComponent(component)">
+                        <md-list-item ng-repeat="component in $ctrl.components | filter:$ctrl.componentFilter" ng-click="$ctrl.loadComponent(component);$event.stopPropagation();">
                             <span>{{component}}</span>
                             <md-divider ng-if="!$last"></md-divider>
                         </md-list-item>
@@ -73,13 +73,14 @@
                             </md-button>
                         </div>
                         <div layout="row" layout-align="center center">
-                          <div flex md-truncate style="font-size:10px;">css({{$ctrl.selectedComponentElement.cssPath}})</div>
+                            <input flex style="font-size:10px;text-align:center;" type="text" name="" value="{{$ctrl.selectedComponentElement.cssPath}}">
                         </div>
                     </section>
                     <section>
                         <md-list>
-                          <md-list-item ng-repeat="key in $ctrl.selectedComponentElementCtrlKeys()">
-                              {{key}}
+                          <md-list-item ng-repeat="property in $ctrl.selectedComponentElementProperties">
+                            <span>{{property.key}}:</span>
+                            <span class="md-secondary" style="overflow:hidden;text-overflow: ellipsis;white-space: nowrap;">{{property.value}}</span>
                           </md-list-item>
                         </md-list>
                     </section>
