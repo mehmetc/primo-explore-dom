@@ -1,6 +1,6 @@
 export default class Helper {
     static isDebugEnabled() {
-        return typeof(angular.element(document.querySelector('prm-logo')).scope()) == 'undefined' ? false : true;
+        return window.name === 'NG_ENABLE_DEBUG_INFO!' || typeof(angular.element(document.querySelector('prm-logo')).scope()) != 'undefined' ? true : false;
     }
 
     static isPrimoAvailable() {

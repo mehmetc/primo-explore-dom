@@ -14,7 +14,8 @@ export default class Primo {
    * @return {string}
    */
   static get version() {
-    return "0.0.8";
+    let _version = "0.0.9";
+    return `Library:${_version} - Primo:${window.appConfig['system-configuration'].Primo_Version_Number}:${window.appConfig['system-configuration'].Primo_HotFix_Number}`;
   }
 
   /**

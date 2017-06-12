@@ -1,6 +1,6 @@
 {
   "name": "primo-explore-dom",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A simple Domain Object Model for Primo 5",
   "main": "js/custom.js",
   "scripts": {

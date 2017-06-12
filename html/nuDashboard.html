@@ -5,6 +5,10 @@
         height: 18px;
         width: 18px;
     }
+
+    .peNotSelectable {
+      color:#aaaaaa;
+    }
 </style>
 <!-- $mdMedia('gt-md') -->
 <div id='explorerUiContainer' ng-show="$ctrl.isActive()" style='position:absolute;top:10px;height:90vh;background-color:white;z-index:1000000;'>
@@ -12,7 +16,10 @@
         <header id='explorerUiHeader' ng-mousedown='$ctrl.headerMove($event)'>
             <md-toolbar>
                 <div class="md-toolbar-tools">
-                    <h2 flex md-truncate>PrimoExplorer {{$ctrl.version}}</h2>
+                    <div flex layout='column'>
+                      <h2 flex md-truncate>PrimoExplorer</h2>
+                      <div style="font-size:x-small">{{$ctrl.version}}</div>
+                    </div>
                     <md-button class='md-icon-button' ng-click="$ctrl.toggle()" aria-label="Close" title='Close'>
                         <md-icon md-svg-icon="primo-ui:close"></md-icon>
                     </md-button>
@@ -21,7 +28,7 @@
         </header>
 
         <section id='pe-components'>
-            <div flex id='pe-components-list' ng-hide='$ctrl.selectedComponentDetailShow'>
+            <div flex id='pe-components-list' ng-hide='$ctrl.selectedComponentDetailShow || $ctrl.selectedComponentElementServiceShow'>
                 <section style='background-color:#eee;'>
                     <div layout='row'>
                         <md-button ng-click='$ctrl.refreshComponents()'>Reload</md-button>
@@ -78,13 +85,36 @@
                     </section>
                     <section>
                         <md-list>
-                          <md-list-item ng-repeat="property in $ctrl.selectedComponentElementProperties">
-                            <span>{{property.key}}:</span>
-                            <span class="md-secondary" style="overflow:hidden;text-overflow: ellipsis;white-space: nowrap;">{{property.value}}</span>
+                          <md-list-item ng-repeat="property in $ctrl.selectedComponentElementProperties" ng-click="$ctrl.loadComponentService(property);$event.stopPropagation();">
+                            <span ng-class="{peNotSelectable: property.value!='e'}">{{property.key}}:</span>
+                            <span ng-class="{peNotSelectable: property.value!='e'}" class="md-secondary" style="overflow:hidden;text-overflow: ellipsis;white-space: nowrap;">{{property.value}}</span>
                           </md-list-item>
                         </md-list>
                     </section>
                 </section>
+            </div>
+
+            <div flex id='pe-components-detail-service' ng-show='$ctrl.selectedComponentElementServiceShow'>
+              <section style='height:100%'>
+                  <md-toolbar class='md-hue-2' style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">
+                      <div class="md-toolbar-tools" style="font-size: 0.8em;min-height: 2.5em;height:2.5em;">
+
+                          <md-button class='md-icon-button' ng-click="$ctrl.selectedComponentElementServiceShow = false;$ctrl.selectedComponentDetailShow=true;" aria-label="Back" title="Back">
+                              <md-icon class="f18" md-svg-icon="primo-ui:chevron-left"></md-icon>
+                          </md-button>
+
+                            <h2 flex md-truncate>{{$ctrl.selectedComponentElementServiceName}}</h2>
+                      </div>
+                  </md-toolbar>
+                  <section>
+                      <md-list>
+                        <md-list-item ng-repeat="property in $ctrl.selectedComponentElementServiceProperties">
+                          <span ng-class="{peNotSelectable: property.value!='e'}">{{property.key}}:</span>
+                          <span ng-class="{peNotSelectable: property.value!='e'}" class="md-secondary" style="overflow:hidden;text-overflow: ellipsis;white-space: nowrap;">{{property.value}}</span>
+                        </md-list-item>
+                      </md-list>
+                  </section>
+              </section>
             </div>
         </section>
     </md-sidenav>
