@@ -44,7 +44,7 @@ This package will extend the newUI through a "Template Package" or "Central Pack
   6. Install and store a reference to this package
     * ```npm install primo-explore-dom --save-dev```
   7. Test.
-    * ```gulp run --view YOUR_VIEW_CODE```
+    * ```gulp run --view YOUR_VIEW_CODE --proxy http://my.primo.com```
     * Open your web browser and go to http://localhost:8003/primo-explore/search?vid=YOUR_VIEW_CODE
 
 PS: __YOUR_VIEW_CODE__ must be replaced with the code you use for your view.    
@@ -84,6 +84,7 @@ Primo.view.then(v => console.log(v.code));
 - [Helper](#helper)
 - [Components](#components)
 - [UI](#ui)
+- [Examples](#examples)
 
 # General<a name="general"></a>
 If you are using this library to understand the newUI always load debug info first.
@@ -291,3 +292,19 @@ The components list changes over time. Some components are only available in cer
   Primo.explore.ui.toggle()
 ```  
 ![PRIMO Domain Object Model UI](./img/primo-explore-dom_ui.gif "PRIMO Domain Object Model UI")
+
+# Examples<a name="examples"></a>
+### Display the _user name_ after the logo
+```js
+  app.component('prmLogoAfter', {
+    bindings: {
+      parentCtrl : '<'
+    },
+    template: '<div>{{$ctrl.user}}</div>',
+    controller: function(){
+      let ctrl = this;
+      ctrl.user = '';
+      Primo.user.then(u => ctrl.user = u.name);
+    }
+  });
+```
