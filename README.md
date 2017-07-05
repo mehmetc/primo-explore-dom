@@ -72,7 +72,7 @@ angular.reloadWithDebugInfo();
 
 //When screen is reloaded
 //Get a pointer to AngularJs and angularLoad
-var appInjector = angular.injector(['ng','angularLoad'])
+var appInjector = angular.injector(['ng','angularLoad']);
 //Get a reference to angularLoad
 var angularLoad = appInjector.get('angularLoad');
 //Load the script;
@@ -275,6 +275,10 @@ The components list changes over time. Some components are only available in cer
 ```js
   Primo.explore.helper.http
 ```  
+### Reference to angular-load. Returns a promise
+```js
+  Primo.explore.helper.loadScript()
+```
 ### Reference to PrimoExplore rootScope
 ```js
   Primo.explore.helper.rootScope()
@@ -290,7 +294,17 @@ The components list changes over time. Some components are only available in cer
 ### Returns a promise to userDetails
 ```js
   Primo.explore.helper.userDetails()
+  Primo.explore.helper.userDetailsHTTP()
 ```  
+### Returns a promise to userFines
+```js
+  Primo.explore.helper.userFinesHTTP()
+```  
+### Returns a promise to userLoans
+```js
+  Primo.explore.helper.userLoansHTTP()
+```  
+
 ### Make a component blink
 ```js
   Primo.explore.helper.blink(component, numberOfBlinks = 4)
