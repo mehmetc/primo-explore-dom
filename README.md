@@ -1,6 +1,12 @@
 
 ### This is a __pre-release__: you can help us make it better.
 
+### version 0.0.9
+- extracted ui to its own project [primo-explore-dom-ui](https://github.com/mehmetc/primo-explore-dom-ui)
+- added user.loans
+- add Helper.loadScript()
+- UI loads when in debug mode
+
 ### Current version 0.0.8
 - refactoring of ui
 - better component ctrl discovery

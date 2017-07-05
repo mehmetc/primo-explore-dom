@@ -57,6 +57,19 @@ export default class Helper {
       return null;
     }
 
+
+    static loadScript(scriptURL) {
+      if (window.angular) {
+          let appInjector = angular.injector(['ng','angularLoad']);
+          if (appInjector) {
+              let angularLoad = appInjector.get('angularLoad');
+              if (angularLoad) {
+                return angularLoad.loadScript(scriptURL);
+              }
+          }
+      }
+    }
+
     static rootScope() {
       let injector = this.injector();
       if (injector) {
@@ -109,6 +122,27 @@ export default class Helper {
                 resolve(fines.fine);
             } else {
               console.log('No fines');
+              resolve([]);
+            }
+          }
+          catch(error){
+            resolve([]);
+          }
+        }
+        );
+      });
+    }
+
+    static userLoansHTTP() {
+      return new Promise((resolve, reject) => {
+        this.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/loans').then(userLoans => {
+          try {
+            let data = userLoans.data;
+            if (data.status == 'ok') {
+                let loans = data.data.loans;
+                resolve(loans.loan);
+            } else {
+              console.log('No loans');
               resolve([]);
             }
           }

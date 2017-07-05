@@ -83,8 +83,10 @@ export default class Primo {
     return new Promise((resolve, reject) => {
       Helper.userDetailsHTTP().then((userDetails)=>{
         Helper.userFinesHTTP().then((userFines) => {
-            resolve(new User({details: userDetails, fines: userFines}));
-        });
+          Helper.userLoansHTTP().then((userLoans) => {
+              resolve(new User({details: userDetails, fines: userFines, loans: userLoans}));
+          });
+        });        
       });
     });
   }

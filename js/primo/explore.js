@@ -1,6 +1,5 @@
 import Components from './explore/components'
 import Helper from './explore/helper'
-import Ui from './explore/ui'
 
 //this is proxy class
 export default class Explore {
@@ -13,11 +12,9 @@ export default class Explore {
     return c;
   }
 
-  //TODO: extract
   static get ui() {
     if (this._ui === undefined) {
-      console.log('Creation UI');
-      this._ui = new Ui();
+      console.error('This is a stub function call "angular.reloadWithDebugInfo()" to activate UI');
     }
     return this._ui;
   }
