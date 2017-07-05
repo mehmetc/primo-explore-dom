@@ -8,7 +8,7 @@
 - Primo.version now displays library version and Primo version & hot fix
 - Possibility to drill down on a service in the UI
 - Better check if reloadWithDebugInfo() was ran
-- explorer UI popups automatically when Primo UI is loaded with angular.reloadWithDebugInfo()
+- explorer UI pops up automatically when Primo UI is loaded with angular.reloadWithDebugInfo()
 - some general refactoring
 - fixed an issue that would prevent explore.ui.toggle() from running twice
 
