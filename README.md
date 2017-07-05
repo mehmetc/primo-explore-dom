@@ -80,11 +80,6 @@ angularLoad.loadScript('https://npmcdn.com/primo-explore-dom/js/primo-explore-do
     console.log('script loaded');    
 });
 
-//activate explorer ui
-Primo.explore.ui.toggle();
-
-//Print the VID
-Primo.view.then(v => console.log(v.code));
 ```
 
 # Quick links
@@ -150,6 +145,11 @@ For now it is not possible to access the $scope and $ctrl without the debug info
 ```js
   Primo.user.then(user => console.log(user.fines.map(f => parseFloat(f.finesum)).reduce((p,c)=> p+c)))
 ```
+### Print number of loans for user
+```js
+  Primo.user.then(user => console.log(user.loans.length))
+```
+
 ## view<a name="view"></a>
 ```Primo.view``` returns a promise
 ### Get VID
