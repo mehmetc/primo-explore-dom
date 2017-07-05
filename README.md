@@ -1,13 +1,18 @@
 
 ### This is a __pre-release__: you can help us make it better.
 
-### version 0.0.9
+### Current version 0.0.9
 - extracted ui to its own project [primo-explore-dom-ui](https://github.com/mehmetc/primo-explore-dom-ui)
 - added user.loans
 - add Helper.loadScript()
-- UI loads when in debug mode
+- Primo.version now displays library version and Primo version & hot fix
+- Possibility to drill down on a service in the UI
+- Better check if reloadWithDebugInfo() was ran
+- explorer UI popups automatically when Primo UI is loaded with angular.reloadWithDebugInfo()
+- some general refactoring
+- fixed an issue that would prevent explore.ui.toggle() from running twice
 
-### Current version 0.0.8
+### version 0.0.8
 - refactoring of ui
 - better component ctrl discovery
 - ui component property display
