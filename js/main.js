@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import Primo from './primo'
 import Helper from './primo/explore/helper'
 window.Primo = Primo;

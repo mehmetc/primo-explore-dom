@@ -13,7 +13,7 @@ export default class Helper {
     }
 
     static get componentNames() {
-        let tags = document.getElementsByTagName('*');
+        let tags = Array.from(document.getElementsByTagName('*'));
         let componentNames = [];
         for (let tag of tags) {
             let tagName = tag.localName;
