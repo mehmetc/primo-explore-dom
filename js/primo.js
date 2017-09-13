@@ -14,7 +14,7 @@ export default class Primo {
    * @return {string}
    */
   static get version() {
-    let _version = "0.0.9";
+    let _version = "0.0.10";
     return `Library:${_version} - Primo:${window.appConfig['system-configuration'].Primo_Version_Number}:${window.appConfig['system-configuration'].Primo_HotFix_Number}`;
   }
 
@@ -86,7 +86,7 @@ export default class Primo {
           Helper.userLoansHTTP().then((userLoans) => {
               resolve(new User({details: userDetails, fines: userFines, loans: userLoans}));
           });
-        });        
+        });
       });
     });
   }
