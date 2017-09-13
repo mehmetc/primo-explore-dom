@@ -28,19 +28,25 @@ class Component {
   }
 
   ctrl(){
-    let scope = this.scope();
-    if (scope) {
-      let scopeChild = scope.$$childTail;
-      if (Object.keys(scope).includes('$ctrl')) {
-          return scope.$ctrl
-      } else if(Object.keys(scope).includes('ctrl')) {
-          return scope.ctrl
-      } else if (scopeChild && Object.keys(scopeChild).includes('$ctrl')){
-          return scopeChild.$ctrl;
-      } else if (scopeChild && Object.keys(scopeChild).includes('ctrl')){
-          return scopeChild.ctrl;
-      } else {
-          console.error('No $ctrl defined');
+    let c = angular.element(this.element).controller(this.name);
+    if (c) {
+      return c;
+    } else {
+      console.log('using alternative method to get controller');
+      let scope = this.scope();
+      if (scope) {
+        let scopeChild = scope.$$childTail;
+        if (Object.keys(scope).includes('$ctrl')) {
+            return scope.$ctrl
+        } else if(Object.keys(scope).includes('ctrl')) {
+            return scope.ctrl
+        } else if (scopeChild && Object.keys(scopeChild).includes('$ctrl')){
+            return scopeChild.$ctrl;
+        } else if (scopeChild && Object.keys(scopeChild).includes('ctrl')){
+            return scopeChild.ctrl;
+        } else {
+            console.error('No $ctrl defined');
+        }
       }
     }
 
