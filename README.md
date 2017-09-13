@@ -1,6 +1,9 @@
 
 ### This is a __pre-release__: you can help us make it better.
 
+### Current version 0.0.10
+- can retrieve controller without scope()
+
 ### Current version 0.0.9
 - extracted ui to its own project [primo-explore-dom-ui](https://github.com/mehmetc/primo-explore-dom-ui)
 - added user.loans
