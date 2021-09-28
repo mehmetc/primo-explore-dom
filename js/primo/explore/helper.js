@@ -57,6 +57,16 @@ export default class Helper {
       return null;
     }
 
+    static get restBaseURLs() {      
+      let injector = this.injector();
+      if (injector) {
+        let h = injector.get('restBaseURLs');
+        if (h) {
+          return h;
+        }
+      }     
+      return {}; 
+    }
 
     static loadScript(scriptURL) {
       if (window.angular) {
@@ -108,13 +118,15 @@ export default class Helper {
     static userDetailsHTTP() {
       let viewCode = this.jwtData().viewId || window.appConfig['vid'];
       return new Promise( (resolve,reject) => {
-        this.http.get(`/primo_library/libweb/webservices/rest/v1/usersettings?vid=${viewCode}`).then(userDetails => resolve(userDetails.data));
+       // this.http.get(`/primo_library/libweb/webservices/rest/v1/usersettings?vid=${viewCode}`).then(userDetails => resolve(userDetails.data));
+        this.http.get(`${this.restBaseURLs.userSettingsBaseURL}?vid=${viewCode}`).then(userDetails => resolve(userDetails.data));
       });
     }
 
     static userFinesHTTP() {
       return new Promise((resolve, reject) => {
-        this.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/fines').then(userFines => {
+        //this.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/fines').then(userFines => {
+        this.http.get(`${this.restBaseURLs.myAccountBaseURL}/fines`).then(userFines => {
           try {
             let data = userFines.data;
             if (data.status == 'ok') {
@@ -135,7 +147,7 @@ export default class Helper {
 
     static userLoansHTTP() {
       return new Promise((resolve, reject) => {
-        this.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/loans').then(userLoans => {
+        this.http.get(`${this.restBaseURLs.myAccountBaseURL}/loans`).then(userLoans => {
           try {
             let data = userLoans.data;
             if (data.status == 'ok') {
